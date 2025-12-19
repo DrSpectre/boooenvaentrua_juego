@@ -1,0 +1,17 @@
+{
+  "name": "com.apyra.nvim-unity",
+  "version": "1.3.2",
+  "displayName": "Neovim Code Editor",
+  "description": "Integration between Unity and Neovim as an external editor.",
+  "unity": "2021.3",
+  "keywords": [
+    "neovim",
+    "unity",
+    "editor"
+  ],
+  "author": {
+    "name": "apyra",
+    "url": "https://github.com/apyra"
+  },
+  "_fingerprint": "21de20d7dc19fe02dd5359815f22005985128b2c"
+}
