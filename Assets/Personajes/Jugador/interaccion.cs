@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,10 +9,11 @@ public class Interaccion: MonoBehaviour{
         inactivo,
         activo
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Seccion diseñada para obtener la interaccion del usuario o pulsacion de teclas. 
     private PlayerInput entradas;
     private InputAction interactuar;
-    private EstadosInteraccion estado = EstadosInteraccion.inactivo;
+    // Seccion diseñada para identificar los objetos con colision para itneractuar
+    private List<ProtocoloInteraccion> cosas_manejables = new List<ProtocoloInteraccion>(); 
 
     void Awake() {
         entradas = GetComponent<PlayerInput>();
@@ -21,25 +23,27 @@ public class Interaccion: MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
-        if (estado == EstadosInteraccion.activo && interactuar.ReadValue<float>() > 0){
-            Debug.Log("Se ha pulsado la tecla de itneractuar");
+        if (cosas_manejables.Count > 0 && interactuar.ReadValue<float>() > 0){
+            Debug.Log($"La cantidad de objetos es {cosas_manejables.Count}");
+            cosas_manejables[0].activar();
         }
-    }
-
-    void OllisionEnter(Collision collision){
-        Debug.Log($"Colision con {collision.collider.name}");
-        
     }
     
     void OnTriggerEnter(Collider colision){
-        if(colision.gameObject.tag == "interactuable"){
-            estado = EstadosInteraccion.activo;
+        Debug.Log($"En trigger enter con {colision.name}");
+        var cosa = colision.GetComponent<ProtocoloInteraccion>();
+        
+        if (cosa != null){
+            cosas_manejables.Add(cosa);
         }
+        
     }
 
     void OnTriggerExit(Collider colision){
-        if(colision.gameObject.tag == "interactuable"){
-            estado = EstadosInteraccion.inactivo;
+        var cosa = colision.GetComponent<ProtocoloInteraccion>();
+        
+        if (cosa != null){
+            cosas_manejables.Remove(cosa);
         }
     }
 }
