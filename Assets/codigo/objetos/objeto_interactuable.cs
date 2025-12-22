@@ -6,13 +6,13 @@ using UnityEngine;
 [Serializable]
 public class ObjetoInteractuable : MonoBehaviour, ProtocoloInteraccion, ProtocoloEtiqueta {
     public EstadosInteracion estado { get; set; }
-    private List<Etiquetas> etiquetas { get; set; }
+    public List<Etiquetas> etiquetas { get; set; }
     [SerializeField] public float temporizador;
     [SerializeReference] public GameObject objeto_a_activar;
     private ProtocoloInteraccion _objeto_a_activar;
     void Start() {
         estado = EstadosInteracion.inactivo;
-
+        etiquetas = new List<Etiquetas>();
         etiquetas.Add(Etiquetas.objeto);
 
         if (objeto_a_activar != null) {
@@ -23,9 +23,15 @@ public class ObjetoInteractuable : MonoBehaviour, ProtocoloInteraccion, Protocol
     // Update is called once per frame
     void Update() { }
 
-    public bool pertenezco_al_grupo(Etiquetas etiqueta) {
+    public bool pertenezco_al_grupo(Etiquetas etiqueta_a_buscar) {
+        foreach (var etiqueta in etiquetas) {
+            if (etiqueta == etiqueta_a_buscar)
+                return true;
+        }
+
         return false;
     }
+
     public void accionar() {
         switch (estado) {
             case EstadosInteracion.activo:
@@ -41,10 +47,13 @@ public class ObjetoInteractuable : MonoBehaviour, ProtocoloInteraccion, Protocol
         if (estado == EstadosInteracion.activo) {
             return false;
         }
+        estado = EstadosInteracion.activo;
 
         if (_objeto_a_activar != null) {
             _objeto_a_activar.accionar();
         }
+
+        Debug.Log($"Accionando a {this.gameObject.name}");
 
         return true;
     }
@@ -67,6 +76,6 @@ public class ObjetoInteractuable : MonoBehaviour, ProtocoloInteraccion, Protocol
 
     public void OnDrawGizmos() {
         Gizmos.color = Color.violet;
-        Gizmos.DrawCube(transform.position, Vector3.one);
+        Gizmos.DrawCube(transform.position, transform.localScale);
     }
 }
