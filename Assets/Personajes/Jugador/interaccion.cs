@@ -24,26 +24,26 @@ public class Interaccion: MonoBehaviour{
     // Update is called once per frame
     void Update(){
         if (cosas_manejables.Count > 0 && interactuar.ReadValue<float>() > 0){
-            Debug.Log($"La cantidad de objetos es {cosas_manejables.Count}");
+            //Debug.Log($"La cantidad de objetos es {cosas_manejables.Count}");
             cosas_manejables[0].accionar();
         }
     }
     
     void OnTriggerEnter(Collider colision){
-        Debug.Log($"En trigger enter con {colision.name}");
-        var cosa = colision.GetComponent<ProtocoloInteraccion>();
-        
-        if (cosa != null){
-            cosas_manejables.Add(cosa);
+        Debug.Log($"En trigger enter de {name} con {colision.name} entrando");
+        var cosa = colision.GetComponent<ProtocoloEtiqueta>();
+
+        if (cosa.pertenezco_al_grupo(Etiquetas.objeto)){ 
+            cosas_manejables.Add(colision.GetComponent<ProtocoloInteraccion>());
         }
-        
     }
 
     void OnTriggerExit(Collider colision){
-        var cosa = colision.GetComponent<ProtocoloInteraccion>();
-        
-        if (cosa != null){
-            cosas_manejables.Remove(cosa);
+        Debug.Log($"En trigger exit de {name} con {colision.name} saliendo");
+        var cosa = colision.GetComponent<ProtocoloEtiqueta>();
+
+        if (cosa.pertenezco_al_grupo(Etiquetas.objeto)){ 
+            cosas_manejables.Add(colision.GetComponent<ProtocoloInteraccion>());
         }
     }
 }
