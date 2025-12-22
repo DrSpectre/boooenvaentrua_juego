@@ -25,7 +25,7 @@ public class Interaccion: MonoBehaviour{
     void Update(){
         if (cosas_manejables.Count > 0 && interactuar.ReadValue<float>() > 0){
             Debug.Log($"La cantidad de objetos es {cosas_manejables.Count}");
-            cosas_manejables[0].activar();
+            cosas_manejables[0].accionar();
         }
     }
     
