@@ -73,9 +73,4 @@ public class ObjetoInteractuable : MonoBehaviour, ProtocoloInteraccion, Protocol
     private void OnTriggerExit(Collider saliente) {
         Debug.Log($"Con {this.name} esta saliendo {saliente.name}");
     }
-
-    public void OnDrawGizmos() {
-        Gizmos.color = Color.violet;
-        Gizmos.DrawCube(transform.position, transform.localScale);
-    }
 }
