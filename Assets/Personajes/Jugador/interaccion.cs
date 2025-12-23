@@ -31,16 +31,20 @@ public class Interaccion: MonoBehaviour{
     
     void OnTriggerEnter(Collider colision){
         Debug.Log($"En trigger enter de {name} con {colision.name} entrando");
-        var cosa = colision.GetComponent<ProtocoloEtiqueta>();
+        var cosa = colision.GetComponent<Etiquetador>();
 
-        if (cosa.pertenezco_al_grupo(Etiquetas.objeto)){ 
+        var caracteristicas_del_objeto = colision.GetComponent<Caracteristicas>();
+        ParLlaveValor[] caracteristcas_a_identificar = { new ParLlaveValor("farola", "clasica") }; 
+        Debug.Log($"contiene las caracteristicas de una farola {caracteristicas_del_objeto.cumple_con(caracteristcas_a_identificar)}");
+
+        if (cosa.pertenezco_al_grupo(Etiquetas.objeto)) {
             cosas_manejables.Add(colision.GetComponent<ProtocoloInteraccion>());
         }
     }
 
     void OnTriggerExit(Collider colision){
         Debug.Log($"En trigger exit de {name} con {colision.name} saliendo");
-        var cosa = colision.GetComponent<ProtocoloEtiqueta>();
+        var cosa = colision.GetComponent<Etiquetador>();
 
         if (cosa.pertenezco_al_grupo(Etiquetas.objeto)){ 
             cosas_manejables.Add(colision.GetComponent<ProtocoloInteraccion>());

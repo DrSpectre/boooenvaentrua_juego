@@ -11,7 +11,5 @@ public enum Etiquetas {
 
 
 public interface ProtocoloEtiqueta {
-    public List<Etiquetas> etiquetas { get; set; }
-
     public bool pertenezco_al_grupo(Etiquetas etiqueta);
 }
