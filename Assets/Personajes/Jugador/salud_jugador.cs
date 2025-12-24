@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(ProtocoloMuerte))]
-public class SaludJugador : MonoBehaviour, ProtocoloSalud {
+public class SaludJugador: MonoBehaviour, ProtocoloSalud {
     [SerializeField] int salud = 100;
     ProtocoloMuerte[] _efectos_de_muerte;
     public GameObject[] elementos_ui;
@@ -22,6 +22,7 @@ public class SaludJugador : MonoBehaviour, ProtocoloSalud {
             }
         }
     }
+
     public void quitar_salud(int cantidad) {
         salud -= cantidad;
         if (salud < 0) {
