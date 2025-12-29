@@ -3,41 +3,45 @@ using UnityEngine;
 
 public class switch_linterna : MonoBehaviour, ProtocoloInteraccion {
     public GameObject farola;
+    private Light _farola;
     public EstadosInteracion estado { get; set; }
     void Start() {
         estado = EstadosInteracion.inactivo;
+        _farola = farola.GetComponent<Light>();
+        _farola.enabled = false;
+
     }
 
     public void accionar() {
         switch (estado) {
             case EstadosInteracion.activo:
-                activar();
+                desactivar();
                 break;
 
             case EstadosInteracion.inactivo:
-                desactivar();
+                activar();
                 break;
         }
     }
 
     public bool activar() {
-        if (farola == null || estado == EstadosInteracion.activo) {
+        if (_farola == null || estado == EstadosInteracion.activo) {
             return false;
         }
 
         estado = EstadosInteracion.activo;
-        farola.SetActive(true);
+        _farola.enabled = true;
         
         return true;
     }
 
     public bool desactivar() {
-        if (farola == null || estado == EstadosInteracion.inactivo) {
+        if (_farola == null || estado == EstadosInteracion.inactivo) {
             return false;
         }
 
         estado = EstadosInteracion.inactivo;
-        farola.SetActive(true);
+        _farola.enabled = false; 
         
         return true;
     }
