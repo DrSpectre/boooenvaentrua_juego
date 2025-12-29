@@ -756,7 +756,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 12
   m_Type: 2
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9716981, g: 0.6487189, b: 0.01375042, a: 1}
   m_Intensity: 100
   m_Range: 10
   m_SpotAngle: 30
@@ -820,7 +820,7 @@ Transform:
   m_GameObject: {fileID: 860050830}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.09485, y: 1.25001, z: -63.67603}
+  m_LocalPosition: {x: -0.094849944, y: 5.75001, z: -61.92603}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2815,7 +2815,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1645331475}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2874,8 +2874,8 @@ Transform:
   m_GameObject: {fileID: 1645331475}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.08776, y: 1.00001, z: -69.75}
-  m_LocalScale: {x: 5.3, y: 2.2, z: 2.1}
+  m_LocalPosition: {x: 0.08775997, y: 1.00001, z: -62.5}
+  m_LocalScale: {x: 5.596801, y: 7.4800005, z: 6.0606}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
