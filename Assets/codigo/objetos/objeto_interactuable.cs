@@ -5,16 +5,16 @@ using UnityEngine;
 
 [Serializable]
 [RequireComponent(typeof(Etiquetador))] // Aqui idnicamos que tenemos una dependencia de objetos o componentes para funcionar y evitar errores en utilizacion
-public class ObjetoInteractuable : MonoBehaviour, ProtocoloInteraccion {
-    public EstadosInteracion estado { get; set; }
+public class ObjetoInteractuable : MonoBehaviour, ProtocoloInteractuable {
+    public EstadosInteractuable estado { get; set; }
     [SerializeField] public float temporizador;
     [SerializeReference] public GameObject objeto_a_activar;
-    private ProtocoloInteraccion _objeto_a_activar;
+    private ProtocoloInteractuable _objeto_a_activar;
     void Start() {
-        estado = EstadosInteracion.inactivo;
+        estado = EstadosInteractuable.inactivo;
 
         if (objeto_a_activar != null) {
-            _objeto_a_activar = objeto_a_activar.GetComponent<ProtocoloInteraccion>();
+            _objeto_a_activar = objeto_a_activar.GetComponent<ProtocoloInteractuable>();
         }
     }
 
@@ -24,20 +24,20 @@ public class ObjetoInteractuable : MonoBehaviour, ProtocoloInteraccion {
 
     public void accionar() {
         switch (estado) {
-            case EstadosInteracion.activo:
+            case EstadosInteractuable.activo:
                 desactivar();
                 break;
-            case EstadosInteracion.inactivo:
+            case EstadosInteractuable.inactivo:
                 activar();
                 break;
         }
     }
 
     public bool activar() {
-        if (estado == EstadosInteracion.activo) {
+        if (estado == EstadosInteractuable.activo) {
             return false;
         }
-        estado = EstadosInteracion.activo;
+        estado = EstadosInteractuable.activo;
 
         if (_objeto_a_activar != null) {
             _objeto_a_activar.accionar();
@@ -49,7 +49,7 @@ public class ObjetoInteractuable : MonoBehaviour, ProtocoloInteraccion {
     }
 
     public bool desactivar() {
-        if (estado == EstadosInteracion.inactivo) {
+        if (estado == EstadosInteractuable.inactivo) {
             return false;
         }
 

@@ -13,7 +13,7 @@ public class Interaccion: MonoBehaviour{
     private PlayerInput entradas;
     private InputAction interactuar;
     // Seccion diseñada para identificar los objetos con colision para itneractuar
-    private List<ProtocoloInteraccion> cosas_manejables = new List<ProtocoloInteraccion>();
+    private List<ProtocoloInteractuable> cosas_manejables = new List<ProtocoloInteractuable>();
 
 
     void Awake() {
@@ -53,8 +53,8 @@ public class Interaccion: MonoBehaviour{
         // Debug.Log($"contiene las caracteristicas de una farola {caracteristicas_del_objeto.cumple_con(caracteristcas_a_identificar)}");
 
         if (cosa.pertenezco_al_grupo(Etiquetas.objeto)) { // Condicional apra identificar que hacer y como interactuar con el objeto
-            if (!cosas_manejables.Contains(colision.GetComponent<ProtocoloInteraccion>())) { // Condicional para evitar agregar multiples instancias del objeto y tener problemas despues.
-                cosas_manejables.Add(colision.GetComponent<ProtocoloInteraccion>());
+            if (!cosas_manejables.Contains(colision.GetComponent<ProtocoloInteractuable>())) { // Condicional para evitar agregar multiples instancias del objeto y tener problemas despues.
+                cosas_manejables.Add(colision.GetComponent<ProtocoloInteractuable>());
             }
         }
     }
@@ -64,7 +64,7 @@ public class Interaccion: MonoBehaviour{
         var cosa = colision.GetComponent<Etiquetador>();
 
         if (cosa.pertenezco_al_grupo(Etiquetas.objeto)){ 
-            cosas_manejables.Remove(colision.GetComponent<ProtocoloInteraccion>());
+            cosas_manejables.Remove(colision.GetComponent<ProtocoloInteractuable>());
         }
     }
 }

@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 
-public enum EstadosInteracion {
+public enum EstadosInteractuable {
     activo,
     inactivo,
 }
 
-public interface ProtocoloInteraccion{
-    public EstadosInteracion estado { get; set; }
+public interface ProtocoloInteractuable{
+    public EstadosInteractuable estado { get; set; }
     Boolean activar();
     Boolean desactivar();
     void accionar();
