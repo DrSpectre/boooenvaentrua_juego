@@ -13,19 +13,24 @@ public class Interaccion: MonoBehaviour{
     private PlayerInput entradas;
     private InputAction interactuar;
     // Seccion diseñada para identificar los objetos con colision para itneractuar
-    private List<ProtocoloInteraccion> cosas_manejables = new List<ProtocoloInteraccion>(); 
+    private List<ProtocoloInteraccion> cosas_manejables = new List<ProtocoloInteraccion>();
+
 
     void Awake() {
         entradas = GetComponent<PlayerInput>();
 
-       interactuar = entradas.actions.FindAction("interactuar");
+        interactuar = entradas.actions.FindAction("interactuar");
     }
 
     // Update is called once per frame
-    void Update(){
-        if (cosas_manejables.Count > 0 && interactuar.ReadValue<float>() > 0){
-            //Debug.Log($"La cantidad de objetos es {cosas_manejables.Count}");
+    void FixedUpdate(){
+        if (cosas_manejables.Count > 0 && interactuar.WasPressedThisFrame()){
+            Debug.Log($"La cantidad de objetos es {cosas_manejables.Count}");
             cosas_manejables[0].accionar();
+            foreach (var objeto in cosas_manejables) {
+                //Debug.Log($"Cosa interactuable: {objeto}");
+                objeto.accionar();
+            }
         }
     }
     
@@ -35,6 +40,7 @@ public class Interaccion: MonoBehaviour{
 
         var caracteristicas_del_objeto = colision.GetComponent<Caracteristicas>();
         ParLlaveValor[] caracteristcas_a_identificar = { new ParLlaveValor("farola", "clasica") }; 
+
         Debug.Log($"contiene las caracteristicas de una farola {caracteristicas_del_objeto.cumple_con(caracteristcas_a_identificar)}");
 
         if (cosa.pertenezco_al_grupo(Etiquetas.objeto)) {
@@ -47,7 +53,7 @@ public class Interaccion: MonoBehaviour{
         var cosa = colision.GetComponent<Etiquetador>();
 
         if (cosa.pertenezco_al_grupo(Etiquetas.objeto)){ 
-            cosas_manejables.Add(colision.GetComponent<ProtocoloInteraccion>());
+            cosas_manejables.Remove(colision.GetComponent<ProtocoloInteraccion>());
         }
     }
 }
