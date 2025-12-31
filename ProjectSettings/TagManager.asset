@@ -6,6 +6,7 @@ TagManager:
   tags:
   - jugador
   - interactuable
+  - ui_leyenda_superior
   layers:
   - Default
   - TransparentFX

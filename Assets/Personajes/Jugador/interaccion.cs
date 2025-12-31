@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
-public class Interaccion: MonoBehaviour{
+public class Interaccion: MonoBehaviour {
     enum EstadosInteraccion {
         inactivo,
         activo
@@ -15,6 +18,8 @@ public class Interaccion: MonoBehaviour{
     // Seccion diseñada para identificar los objetos con colision para itneractuar
     private List<ProtocoloInteractuable> cosas_manejables = new List<ProtocoloInteractuable>();
 
+    private ProtocoloDirectorInterfaz director_ui;
+
 
     void Awake() {
         entradas = GetComponent<PlayerInput>();
@@ -22,8 +27,13 @@ public class Interaccion: MonoBehaviour{
         interactuar = entradas.actions.FindAction("interactuar");
 
         interactuar.performed += realizar_interaccion;  // Esta accion se ejecuta cuando el jugador pulsa el boton y solo una vez
-        // interactuar.canceled += actualizar_pulsacion; // este es caundo se deja de pulsar o finaliza la pulsación
-        // interactuar.started += actualizar_pulsacion;  // Este se manda a llamar cuando apenas se acaba de pulsar el boton. 
+                                                        // interactuar.canceled += actualizar_pulsacion; // este es caundo se deja de pulsar o finaliza la pulsación
+                                                        // interactuar.started += actualizar_pulsacion;  // Este se manda a llamar cuando apenas se acaba de pulsar el boton. 
+
+        // director_ui = FindFirstObjectByType<ProtocoloDirectorInterfaz>(); // Este no funciona para buscar cosas con un protocolo en especifico.
+        // direcctor_ui = FindObjectsByType<MonoBehaviour>().OfType<ProtocoloDirectorInterfaz>().ToArray();
+        director_ui = Herramientas.ObtenerElPrimerComponenteDeTipo<ProtocoloDirectorInterfaz>();
+
     }
 
     // Update is called once per frame
@@ -42,7 +52,7 @@ public class Interaccion: MonoBehaviour{
         Debug.Log($"HOla mundo:: CONTEXTO: {contexto} ::");
     }
 
-    void OnTriggerEnter(Collider colision){
+    void OnTriggerEnter(Collider colision) {
         // Debug.Log($"En trigger enter de {name} con {colision.name} entrando");
         var cosa = colision.GetComponent<Etiquetador>();
 
@@ -57,14 +67,23 @@ public class Interaccion: MonoBehaviour{
                 cosas_manejables.Add(colision.GetComponent<ProtocoloInteractuable>());
             }
         }
+
+        if (cosas_manejables.Count > 0) {
+            director_ui.activar_elemento("nombre_secundario");
+        }
+
     }
 
-    void OnTriggerExit(Collider colision){
+    void OnTriggerExit(Collider colision) {
         // Debug.Log($"En trigger exit de {name} con {colision.name} saliendo");
         var cosa = colision.GetComponent<Etiquetador>();
 
-        if (cosa.pertenezco_al_grupo(Etiquetas.objeto)){ 
+        if (cosa.pertenezco_al_grupo(Etiquetas.objeto)) {
             cosas_manejables.Remove(colision.GetComponent<ProtocoloInteractuable>());
+        }
+
+        if (cosas_manejables.Count <= 0) {
+            director_ui.desactivar_elemento("nombre_secundario");
         }
     }
 }
